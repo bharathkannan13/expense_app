@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Expense Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-4">
+    <h2 class="mb-4 text-center">💰 Simple Expense Tracker</h2>
+
+    <!-- Form -->
+    <form method="POST" action="/add" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <input type="date" name="date" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+            <select name="type" class="form-control" required>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="number" name="amount" placeholder="Amount" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="note" placeholder="Note" class="form-control">
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary">Add Transaction</button>
+        </div>
+    </form>
+
+    <!-- Summary -->
+    <div class="row text-center mb-4">
+        <div class="col">
+            <h5>Total Income</h5>
+            <p class="text-success fw-bold">₹ {{ income }}</p>
+        </div>
+        <div class="col">
+            <h5>Total Expenses</h5>
+            <p class="text-danger fw-bold">₹ {{ expense }}</p>
+        </div>
+        <div class="col">
+            <h5>Balance</h5>
+            <p class="fw-bold">₹ {{ balance }}</p>
+        </div>
+    </div>
+
+    <!-- Transaction Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th><th>Type</th><th>Amount</th><th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t['date'] }}</td>
+                <td>{{ t['type'] }}</td>
+                <td>{{ t['amount'] }}</td>
+                <td>{{ t['note'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Export -->
+    <form method="GET" action="/export">
+        <button class="btn btn-success">Download CSV</button>
+    </form>
+</body>
+</html>
